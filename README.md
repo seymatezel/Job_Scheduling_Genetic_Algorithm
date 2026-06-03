@@ -1,6 +1,6 @@
 
 # Job Scheduling Problem Optimization using Genetic Algorithm
-This repository contains a Python project developed as a Final Term Project for the 1st Year Introduction to Programming / Computer Engineering school course. The project optimizes the sequence of multiple jobs in a single-machine production environment using Genetic Algorithm (GA) steps to minimize the total weighted lateness cost.
+This repository contains a Python project developed as a Final Term Project for the 1st Year Introduction to Programming school course. The project optimizes the sequence of multiple jobs in a single-machine production environment using Genetic Algorithm (GA) steps to minimize the total weighted lateness cost.
 
 # Project Objectives
 The algorithm combines heuristic approaches with logic to achieve the following pipeline:
