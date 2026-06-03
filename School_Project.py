@@ -4,9 +4,9 @@ Created on Sat Dec 14 10:59:19 2024
 
 @author: Şeyma_Tezel 
 """
-#Rastgele 4 sıralama
+#Random 4 rankings
 from random import shuffle
-liste=[[3,4,5],
+list=[[3,4,5],
        [5,7,10],
        [2,3,5],
        [8,10,10],
@@ -17,111 +17,103 @@ liste=[[3,4,5],
        [6,11,10],
        [2,4,5],
        [4,5,10]]
-sıralamalar = []
-maliyetler=[]
+rankings= []
+costs=[]
 for i in range(4):
-    is_sirasi=[0,1,2,3,4,5,6,7,8,9,10]
-    shuffle(is_sirasi)
-    sıralamalar.append(is_sirasi)
-for  is_sirasi in sıralamalar:
-    zaman=0
-    maliyet=0
-    for j in is_sirasi:
-        zaman+=liste[j][0]
-        gecikme=zaman-liste[j][1]
-        if gecikme>0:
-            maliyet+=gecikme*liste[j][2]
-    print( is_sirasi, "   Toplam Maliyet:", maliyet)
+    order_of_work=[0,1,2,3,4,5,6,7,8,9,10]
+    shuffle(order_of_work)
+    rankings.append(order_of_work)
+for  order_of_work in rankings:
+    time=0
+    cost=0
+    for j in order_of_work:
+        time+=list[j][0]
+        delay=time-list[j][1]
+        if delay>0:
+            cost+=delay*list[j][2]
+    print( order_of_work, "   Total Cost:", cost)
     
  
-#Aralarından en az maliyeli 2'si     
-    maliyetler.append(maliyet)
-en_uygun1_maliyet=min(maliyetler) 
-en_uygun1_sıralama = maliyetler.index(en_uygun1_maliyet)
-print("En İyi çözüm 1: ", sıralamalar[en_uygun1_sıralama], "      Toplam Maliyet:", en_uygun1_maliyet)
-maliyetler.remove(en_uygun1_maliyet)
-en_uygun2_maliyet=min(maliyetler)
-en_uygun2_sıralama = maliyetler.index(en_uygun2_maliyet)
-print("En İyi çözüm 2: ", sıralamalar[en_uygun2_sıralama], "      Toplam Maliyet:", en_uygun2_maliyet)
+#The two least expensive of these four randomly generated 
+    costs.append(cost)
+the_cheapest1_cost=min(costs) 
+the_cheapest1_ranking = costs.index(the_cheapest1_cost)
+print("The Best Solution 1: ", rankings[the_cheapest1_ranking], "      Total Cost:",the_cheapest1_cost )
+costs.remove(the_cheapest1_cost)
+the_cheapest2_cost=min(costs)
+the_cheapest2_ranking = costs.index(the_cheapest2_cost)
+print("The Best Solution 2: ", rankings[the_cheapest2_ranking], "      Total Cost:", the_cheapest2_cost)
 
 
-#Tek noktalı Çaprazlama
+#Single-Point Crossover (Permutation-based Crossover)
 from random import randint
-bölünecek_yer = randint(1, 10)
-print ("Tek noktalı çaprazlama için üretilen rassal sayı : " ,bölünecek_yer)
-print("En İyi çözüm 1: ", sıralamalar[en_uygun1_sıralama], "      Toplam Maliyet:", en_uygun1_maliyet)
-print("En İyi çözüm 2: ", sıralamalar[en_uygun2_sıralama], "      Toplam Maliyet:", en_uygun2_maliyet)
-yeni_sıralama1 =sıralamalar[en_uygun1_sıralama][:bölünecek_yer]
-for k in sıralamalar[en_uygun2_sıralama]:
-    if k not in yeni_sıralama1:
-        yeni_sıralama1.append(k)
+crossover_point = randint(1, 10)
+print ("Generated Random Number ForSingle-Point Crossover : " ,crossover_point)
+print("The Best Solution 1: ", rankings[the_cheapest1_ranking], "      Total Cost:",the_cheapest1_cost )
+print("The Best Solution 2: ", rankings[the_cheapest2_ranking], "      Total Cost:", the_cheapest2_cost)
+new_ranking1 =rankings[the_cheapest1_ranking][:crossover_point]
+for k in rankings[the_cheapest2_ranking]:
+    if k not in new_ranking1:
+        new_ranking1.append(k)
 
-yeni_sıralama2 =sıralamalar[en_uygun2_sıralama][:bölünecek_yer]
-for k in sıralamalar[en_uygun1_sıralama]:
-    if k not in yeni_sıralama2:
-        yeni_sıralama2.append(k)
+new_ranking2 =rankings[the_cheapest2_ranking][:crossover_point]
+for k in rankings[the_cheapest1_ranking]:
+    if k not in new_ranking2:
+        new_ranking2.append(k)
 
-zaman=0
-maliyet1=0
-for x in yeni_sıralama1:
-    zaman=zaman+liste[x][0]
-    gecikme= zaman-liste[x][1]
-    if gecikme>0:
-        maliyet1=maliyet1+ gecikme*liste[x][2] 
-print("Yeni sıralama1:", yeni_sıralama1, "    Toplam Maliyet:", maliyet1)
+time=0
+cost1=0
+for x in new_ranking1:
+    time=time+list[x][0]
+    delay= time-list[x][1]
+    if delay>0:
+        cost1=cost1+ delay*list[x][2] 
+print("New Ranking1:", new_ranking1, "    Total Cost:", cost1)
 
-zaman=0
-maliyet2=0
-for x in yeni_sıralama2:
-    zaman=zaman+liste[x][0]
-    gecikme= zaman-liste[x][1]
-    if gecikme>0:
-        maliyet2=maliyet2+ gecikme*liste[x][2] 
-print("Yeni sıralama2:", yeni_sıralama2, "    Toplam Maliyet:", maliyet2)
+time=0
+cost2=0
+for x in new_ranking2:
+    time=time+list[x][0]
+    delay= time-list[x][1]
+    if delay>0:
+        cost2=cost2+ delay*list[x][2] 
+print("New Ranking2:", new_ranking2, "    Total Cost:", cost2)
 
-#Son dört listeden en az maliyetlisi
-sıralamalar2 =[sıralamalar[en_uygun1_sıralama],sıralamalar[en_uygun2_sıralama],yeni_sıralama1, yeni_sıralama2 ]
-maliyetler2=[en_uygun1_maliyet,en_uygun2_maliyet, maliyet1, maliyet2]
-en_uygun_maliyet=min(maliyetler2)
-en_uygun_sıralama=maliyetler2.index(en_uygun_maliyet)
-print("En İyi sıralama:" ,sıralamalar2[en_uygun_sıralama],"Toplam Maliyet:",en_uygun_maliyet)
+#The minimum cost among the 4 sequences
+rankings2 =[rankings[the_cheapest1_ranking],rankings[the_cheapest2_ranking],new_ranking1, new_ranking2 ]
+costs2=[the_cheapest1_cost,the_cheapest2_cost, cost1, cost2]
+the_cheapest_cost=min(costs2)
+the_cheapest_ranking=costs2.index(the_cheapest_cost)
+print("The Best Ranking:" ,rankings2[the_cheapest_ranking],"Total Cost:",the_cheapest_cost)
 
 
-#Mutasyon
-rassal_sayı2=randint(0,10)
-rassal_sayı3=randint(0,10)
-while rassal_sayı2==rassal_sayı3:
-    rassal_sayı3=randint(0,10)  
-print("Mutasyon için üretilen rassal sayılar:",rassal_sayı2," ve ",rassal_sayı3 )
+#Mutation
+random_number2=randint(0,10)
+random_number3=randint(0,10)
+while random_number2==random_number3:
+    random_number3=randint(0,10)  
+print("Generated Random Number For Mutation :",random_number2," and ",random_number3 )
 
-mutasyonlu_sıralama = sıralamalar2[en_uygun_sıralama].copy()
-a=mutasyonlu_sıralama[rassal_sayı2]
-mutasyonlu_sıralama[rassal_sayı2]=mutasyonlu_sıralama[rassal_sayı3]
-mutasyonlu_sıralama[rassal_sayı3]=a
+mutated_ranking = rankings2[the_cheapest_ranking].copy()
+a=mutated_ranking[random_number2]
+mutated_ranking[random_number2]=mutated_ranking[random_number3]
+mutated_ranking[random_number3]=a
 
-zaman=0
-mutasyonlu_maliyet=0
-for y in yeni_sıralama2:
-    zaman=zaman+liste[y][0]
-    gecikme= zaman-liste[y][1]
-    if gecikme>0:
-        mutasyonlu_maliyet+= gecikme*liste[x][2] 
-print("Mutasyonlu Sıralama:", mutasyonlu_sıralama, "    Toplam Maliyet:", mutasyonlu_maliyet)
-print("Mutasyonsuz Sıralama:",sıralamalar2[en_uygun_sıralama],"Toplam Maliyet:",en_uygun_maliyet)
+time=0
+mutated_cost=0
+for y in mutated_ranking:
+    time=time+list[y][0]
+    delay= time-list[y][1]
+    if delay>0:
+        mutated_cost+= delay*list[y][2] 
+print("Mutated Ranking:", mutated_ranking, "    Total Cost:", mutated_cost)
+print("Not Mutated Ranking:",rankings2[the_cheapest_ranking],"Total Cost:",the_cheapest_cost)
     
-sıralamalar3=[mutasyonlu_sıralama,sıralamalar2[en_uygun1_sıralama]]
-maliyetler3=[mutasyonlu_maliyet, en_uygun_maliyet]
-en_uygun_maliyet2=min(maliyetler3)
-en_uygun_sıralama2=maliyetler3.index(en_uygun_maliyet2)
-print("En İyi sıralama Son:" ,sıralamalar3[en_uygun_sıralama2],"Toplam Maliyet:",en_uygun_maliyet2)
-
-
-
-
-
-
-
-
+rankings3=[mutated_ranking,rankings2[the_cheapest1_ranking]]
+costs3=[mutated_cost, the_cheapest_cost]
+the_cheapest_cost2=min(costs3)
+the_cheapest_ranking2=costs3.index(the_cheapest_cost2)
+print("Final The Best Ranking:" ,rankings3[the_cheapest_ranking2],"Total Cost:",the_cheapest_cost2)
 
 
 
